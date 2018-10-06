@@ -41,9 +41,10 @@ namespace Echecs
                 Console.ReadLine();
             }
             {
-
+                
             }
             }
+                Console.Clear();
                 Tela.imprimirTabuleiro(partida.tab);
             }
             catch (TabuleiroException e)
