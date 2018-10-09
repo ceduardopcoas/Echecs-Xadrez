@@ -12,6 +12,7 @@ namespace xadrez
         private HashSet<Peca> pecas;
         private HashSet<Peca> capturadas;
         public bool xeque { get; private set; }
+        private Peca vulneravelEnPassant;
 
         public PartidaDeXadrez()
         {
@@ -19,6 +20,7 @@ namespace xadrez
             turno = 1;
             jogadorAtual = Cor.Branca;
             terminada = false;
+            vulneravelEnPassant = null;
             xeque = false;
             pecas = new HashSet<Peca>();
             capturadas = new HashSet<Peca>();
@@ -35,6 +37,9 @@ namespace xadrez
             {
                 capturadas.Add(pecaCapturada);
             }
+
+            // jogada especial roque pequeno
+
             return pecaCapturada;
         }
         public void desfazMovimento(Posicao origem, Posicao destino, Peca pecaCapturada)
@@ -75,6 +80,16 @@ namespace xadrez
 
                 turno++;
                 mudaJogador();
+            }
+
+            Peca p = tab.peca(destino);
+
+            if(p is Peao && (destino.linha == origem.linha -2 || destino.linha == origem.linha + 2))
+            {
+                vulneravelEnPassant = p;
+            }else
+            {
+                vulneravelEnPassant = null;
             }
         }
 
